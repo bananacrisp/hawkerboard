@@ -2,7 +2,7 @@
 
 ENV['RACK_ENV'] = 'test'
 
-require File.join(File.dirname(__FILE__), '..', '..', 'lib/collaborator.rb')
+require File.join(File.dirname(__FILE__), '..', '..', 'lib/hawkerboard.rb')
 
 require 'capybara'
 require 'capybara/cucumber'
@@ -10,17 +10,15 @@ require 'capybara-webkit'
 require 'rspec'
 require 'rack/test'
 
-Capybara.app = Collaborator
+Capybara.app = Hawkerboard
 Capybara.javascript_driver = :webkit
 
-class CollaboratorWorld
+class HawkerboardWorld
   include Capybara::DSL
   include RSpec::Expectations
   include RSpec::Matchers
 end
 
-Mongoid.logger = nil
-
 World do
-  CollaboratorWorld.new
+  HawkerboardWorld.new
 end

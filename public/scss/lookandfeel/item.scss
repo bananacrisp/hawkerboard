@@ -1,7 +1,9 @@
+
 #container {
   .item {
-    position: relative;
-    max-width: 200px;
+    width: 220px;
+    float: left;
+    margin: 10px;
     height: 300px; // this could be judged by JS //
     background: url(../images/fake.jpg) center center no-repeat;
     background-size: cover;

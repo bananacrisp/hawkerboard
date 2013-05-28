@@ -1,18 +1,21 @@
 require 'sinatra/base'
-#this inside the sinatra gem
-# require 'mongoid' #this refers to the mongoid gem
+require 'mongoid'
+
 class Hawkerboard < Sinatra::Base
+  
   #this class is a controller
   #this is the app too! - because it is inheriting from Sinatra::Base
 
   set :views, File.join(File.dirname(__FILE__), '../views')
   set :public_folder, File.join(File.dirname(__FILE__), '../public')
   # enable :sessions
-  # Mongoid.load!(File.join(File.dirname(__FILE__),'mongoid.yml'))
+  #Mongoid.load!(File.join(File.dirname(__FILE__),'mongoid.yml'))
 
   get '/' do
     erb :homepage
   end
+
+
 
 
   # start the server if ruby file executed directly

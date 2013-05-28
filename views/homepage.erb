@@ -8,6 +8,8 @@
     <script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
     <script type="text/javascript" src="/js/underscore.js"></script>
     <script type="text/javascript" src="/js/backbone.js"></script>
+    <script type="text/javascript" src="/js/handlebars.js"></script>
+    <script type="text/javascript" src="/js/jquery.masonry.min.js"></script>
 
 
   </head>
@@ -23,33 +25,35 @@
         <menu>User Account Menu</menu>
       </article>
     </header>
+
     <section id="container"></section>
 
-    /* Template should sit in a new file...?*/
+    
     <script id="item-template" type="text/x-handlebars-template">
-      <article class="item" id="">
+      <article class="item">
         <header>
-          <h1>Brown Shoes</h1>
-          <p>Churchs premium 'Harold' brogue for the modern man</p>
-          <p class="price">£55</p>
+          <h1>{{title}}</h1>
+          <p>{{description}}</p>
+          <p class="price">£{{price}}</p>
           <dt>
-            <p>brown</p>
-            <p>mens</p>
-            <p>brogue</p>
+            {{#each tags}}
+            <p>{{this}}</p>
+            {{/each}}
           </dt>
         </header>
       </article>
     </script>
+
+    <script type="text/javascript" src="/js/model.js"></script>
+    <script type="text/javascript" src="/js/view.js"></script>
+    <script type="text/javascript" src="/js/router.js"></script>
+    
+    <script type="text/javascript">
+      $(function(){
+        new Hawkerboard();
+        Backbone.history.start({pushState: true});
+      });
+    </script>
  </body>
 </html>
 
-<script>
-
-// models.js //
-var products = new Products([{"name": "Brown Shoes", "description": "Churchs premium 'Harold' brogue for the modern man", "price": "55.00", "tags": ["brown", "mens", "brouge"]}]);
-
-// view.js //
-var view = new ProductsView({el: '#container', collection: products});
-view.render();
-
-</script>
