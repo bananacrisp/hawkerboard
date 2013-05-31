@@ -73,7 +73,7 @@ AddItemFormView = Backbone.View.extend({
       description: $('#item_description').val(),
       tags: $('#item_tags').val(),
       image: $('#item_image').val(),
-      everything: $('#item_name').val()+$('#item_description').val(),
+      everything: $('#item_name').val()+$('#item_description').val()+$('#item_tags').val()+$('#item_price').val(),
     });
     hawkerboard.navigate("/", true);
    },
