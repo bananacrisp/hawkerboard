@@ -1,9 +1,7 @@
 <html>
   <head>
-
     <!-- Including our Stylesheets -->
 
-    <!-- link rel="stylesheet" type="text/css" href='/css/bootstrap-responsive.css'-->
     <link rel="stylesheet" type="text/css" href='/css/bootstrap.css'>
     <link rel="stylesheet" type="text/css" href='/css/flat-ui.css'>
     <link rel="stylesheet" type="text/css" href='/css/main.css'>
@@ -13,9 +11,6 @@
     <script type="text/javascript" src="/js/underscore.js"></script>
     <script type="text/javascript" src="/js/backbone.js"></script>
     <script type="text/javascript" src="/js/handlebars.js"></script>
-    <!--script type="text/javascript" src="/js/jquery.masonry.min.js"></script-->
-    <!--script type="text/javascript" src="/js/jquery.vintage.js"></script-->
-
 
   </head>
   <body>
@@ -30,8 +25,8 @@
       <article class="your-account">
         <span id="sign-up-button" class="btn btn-info">Sign Up</span>
         <span id="login-button" class="btn btn-info">Login</span>
-        <span id="add-item-button" class="btn">Sell your item</span>
-        <span id="logout-button" class="btn">Logout</span>
+        <span id="logout-button" class="btn ">Logout</span>
+        <span id="add-item-button" class="btn btn-success">Sell your item</span>
       </article>
     </nav>
 
@@ -67,12 +62,15 @@
               {{/each}}
             </ul>
           </aside>
+
           <form action="/charge" method="post" class="payment">
+
             <article>
               <label class="amount">
-                <input name="charge" value="{{price}}">
+                <input type="hidden" name="charge" value="{{price}}">
               </label>
             </article>
+
             <article class="buy-button">
               <script src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
                   data-key="<%= settings.publishable_key %>"
@@ -81,6 +79,7 @@
               </script>
             </article>
           </form>
+
         </section>
       </article>
     </script>
@@ -133,16 +132,6 @@
         Backbone.history.start();
       });
     </script>
-
-    <!--script type="text/javascript">
-    $(document).ready(function(){
-        $('img').load(function(){
-            $("#container").masonry();
-        });
-        $("#container").masonry();
-    });
-    //note this is from stackoverflow solution not Masonary.js website recommendations //
-    </script-->
 
  </body>
 </html>

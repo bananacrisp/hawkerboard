@@ -29,7 +29,6 @@ class Hawkerboard < Sinatra::Base
   end
 
   #from the Stripe Tutorial (part2)
-
   post '/charge'  do
 
   customer = Stripe::Customer.create(
@@ -43,9 +42,7 @@ class Hawkerboard < Sinatra::Base
     :currency    => 'gbp',
     :customer    => customer
   )
-
-  #erb :index
-  erb :thankyou
+  erb :index
 end
 
 error Stripe::CardError do

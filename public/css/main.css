@@ -47,8 +47,8 @@ nav {
 .search input {
   background: url(../images/search-2x.png) no-repeat center right;
   padding: 30px 15px;
-  font-size: 30px;
-  line-height: 30px;
+  font-size: 20px;
+  line-height: 20px;
   margin: 0;
   color: #ecf0f1;
   width: 70%;
@@ -57,6 +57,9 @@ nav {
 .search-logo {
   width: 80%;
   margin: 0 5%; }
+
+.your-account .btn {
+  margin-bottom: 5px; }
 
 #container {
   /* temp */
@@ -144,9 +147,6 @@ nav {
 
 #item_description {
   height: 80px; }
-
-.payment input {
-  display: none; }
 
 @media (max-width: 500px) {
   body {
