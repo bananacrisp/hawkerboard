@@ -25,9 +25,7 @@ nav {
     float: left;
     padding: 10px; }
   nav .search {
-    width: 50%; }
-  nav .logo {
-    width: 25%; }
+    width: 75%; }
   nav .your-account {
     width: 25%; }
 
@@ -40,10 +38,6 @@ nav {
     text-transform: uppercase;
     font-size: 30px; }
 
-.logo img {
-  width: 50%;
-  margin: 0 25%; }
-
 .search input {
   background: url(../images/search-2x.png) no-repeat center right;
   padding: 30px 15px;
@@ -51,15 +45,24 @@ nav {
   line-height: 20px;
   margin: 0;
   color: #ecf0f1;
-  width: 70%;
-  margin: 0 15%; }
+  width: 90%;
+  margin: 0; }
 
 .search-logo {
-  width: 80%;
+  width: 90%;
   margin: 0 5%; }
 
 .your-account .btn {
   margin-bottom: 5px; }
+
+.foot-note {
+  width: 90%;
+  margin: 0 5%;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  color: #bdc3c7;
+  font-size: 80px; }
 
 #container {
   /* temp */

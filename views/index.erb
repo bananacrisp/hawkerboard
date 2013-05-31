@@ -16,12 +16,9 @@
   </head>
   <body>
     <nav>
-      <article class="logo">
-        <h1>hawkerboard.co.uk</h1>
-      </article>
       <article class="search">
         <span class="search-logo">
-        <input type="text" id="searchbox" placeholder="search HawkerBoard.com" name="searchbox" data-provide="typeahead" autocomplete="off">
+        <input type="text" id="searchbox" placeholder="search HawkerBoard.com" name="searchbox" data-provide="typeahead" autocomplete="off" data-items="hello, goodbye, whynot">
       </article>
       <article class="your-account">
         <span id="sign-up-button" class="btn btn-info">Sign Up</span>
@@ -33,6 +30,8 @@
 
     <section id="container"></section>
 
+    <h1 class="foot-note">hawkerboard.co.uk</h1>
+
 
     <script id="item-template" type="text/x-handlebars-template">
       <article class="item" id="{{cid}}">
@@ -43,6 +42,13 @@
         <section>
           <h1>{{title}}</h1>
           <p class="price">£{{price}}</p>
+          <aside class="all-tags">
+            <ul>
+              {{#each tags}}
+              <li>{{this}}</li>
+              {{/each}}
+            </ul>
+          </aside>
         </section>
       </article>
     </script>

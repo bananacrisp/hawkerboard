@@ -9,13 +9,6 @@ nav {
   }
 }
 
-.logo {
-  img {
-    width: 50%;
-    margin: 0 25%;
-  }
-}
-
 .search {
   input {
     background: url(../images/search-2x.png) no-repeat center right;
@@ -24,13 +17,13 @@ nav {
     line-height: 20px;
     margin: 0;
     color: $clouds;
-    width: 70%;
-    margin: 0 15%;
+    width: 90%;
+    margin: 0;
   }
 }
 
 .search-logo {
-      width: 80%;
+      width: 90%;
       margin: 0 5%;
     }
 
