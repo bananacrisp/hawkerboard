@@ -6,41 +6,61 @@
     float: left;
     margin: 5px;
     background-size: cover;
-    background-color: white;
-    border: 10px solid white;
-    min-height: 300px;
+    background-color: $silver;
+    box-shadow: 0 0 5px white;
+    header {
+        border: 5px solid $silver;
+        border-bottom: none;
+    }
     section {
-      position: absolute;
-      outline: 1px dashed black;
+      position: relative;
       width: 100%;
-      padding: 10px;
-      bottom: 0;
-      height: 180px;
       overflow: hidden;
-      background-color: rgba(255, 255, 255, 0.9);
-      .price {
-        text-align: center;
-        font-size: 28px;
-        padding: 10px;
-        color: $sunflower;
+      background-color: $carrot;
+      border: 5px solid $silver;
       }
       h1 {
         font-size: 20px;
+        max-height: 35px;
         text-align: center;
+        background-color: $clouds;
       }
-      p {
-        font-size: 16px;
+      .price {
+        width: 100%;
+        min-height: 35px;
+        float: left;
+        text-align: center;
+        font-size: 24px;
+        padding: 2%;
+        background-color: $midnightblue;
+        color: $clouds;
       }
-
-    }
-    /*section:hover {
-      height: 180px;
-    }*/
+      .description {
+        width: 100%;
+        min-height: 70px;
+        float: left;
+        text-align: center;
+        font-size: 14px;
+        padding: 2%;
+        text-align: left;
+        background-color: $clouds;
+        color: $midnightblue;
+      }
+      .all-tags {
+        float: left;
+        width: 100%;
+        padding: 2%;
+        min-height: 50px;
+      }
+      .buy-button {
+        width: 60%;
+        margin: 0 20%;
+      }
     ul {
-      width: 100%;
-      margin: 0 auto;
+      width: 90%;
+      margin: 0 5%;
         li {
-          margin: 0 1%;
+          margin: 5px 4%;
           float: left;
           padding: 5px;
           background-color: $carrot;
@@ -54,9 +74,7 @@
           color: white;
         }
       }
-
     }
-
 
   /* temp */
   overflow: hidden;

@@ -46,13 +46,7 @@
         </header>
         <section>
           <h1>{{title}}</h1>
-          <p>{{description}}</p>
           <p class="price">£{{price}}</p>
-          <ul>
-            {{#each tags}}
-            <li>{{this}}</li>
-            {{/each}}
-          </ul>
         </section>
       </article>
     </script>
@@ -64,29 +58,29 @@
         </header>
         <section>
           <h1>{{title}}</h1>
-          <p>{{description}}</p>
           <p class="price">£{{price}}</p>
-          <ul>
-            {{#each tags}}
-            <li>{{this}}</li>
-            {{/each}}
-          </ul>
-
+          <p class="description">Description: {{description}}</p>
+          <aside class="all-tags">
+            <ul>
+              {{#each tags}}
+              <li>{{this}}</li>
+              {{/each}}
+            </ul>
+          </aside>
           <form action="/charge" method="post" class="payment">
             <article>
               <label class="amount">
-                <span>Amount: {{price}}</span>
                 <input name="charge" value="{{price}}">
               </label>
             </article>
-            <script src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
-                data-key="<%= settings.publishable_key %>"
-                data-name="Hawkerboard"
-                data-amount="{{price}}"
-                >
-            </script>
+            <article class="buy-button">
+              <script src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
+                  data-key="<%= settings.publishable_key %>"
+                  data-name="{{title}} for £{{price}}"
+                  data-amount="{{price}}">
+              </script>
+            </article>
           </form>
-
         </section>
       </article>
     </script>

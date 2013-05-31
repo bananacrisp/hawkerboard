@@ -43,6 +43,9 @@ class Hawkerboard < Sinatra::Base
     :currency    => 'gbp',
     :customer    => customer
   )
+
+  #erb :index
+  erb :thankyou
 end
 
 error Stripe::CardError do
