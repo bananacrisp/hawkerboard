@@ -73,6 +73,7 @@ AddItemFormView = Backbone.View.extend({
       description: $('#item_description').val(),
       tags: $('#item_tags').val(),
       image: $('#item_image').val(),
+      everything: $('#item_name').val()+$('#item_description').val(),
     });
     hawkerboard.navigate("/", true);
    },
@@ -107,9 +108,18 @@ IndexView = Backbone.View.extend({
   search: function() {
     $('#container').html('');
     var searchQuery = $('#searchbox').val();
-    var result = this.collection.where({title: searchQuery});
+    //var result = this.collection.where({everything: searchQuery});
+
+    var result = this.collection.filter(function(item) {
+      if(item.get('everything') != null) {
+        return item.get('everything').indexOf(searchQuery) !== -1
+      }
+    })
+
     _.each(result, this.renderItem);
   },
+
+  //fo
 
   signup: function() {
     hawkerboard.navigate("/sign-up", true);
@@ -134,6 +144,8 @@ ProductView = Backbone.View.extend({
 		itemCardView.render();
 	}
 });
+
+//function itemsArray(items)
 
 AddItemView = Backbone.View.extend({
 	render: function() {

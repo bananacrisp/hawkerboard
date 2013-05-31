@@ -7,6 +7,7 @@ class Item
   field :description, type: String
   field :tags, type: Array
   field :image, type: Hash
+  field :everything, type: String
 
   # relationships
   #has_and_belongs_to_one :user
