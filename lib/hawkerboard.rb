@@ -51,9 +51,8 @@ class Hawkerboard < Sinatra::Base
   end
 
   post '/upload' do
-    content_type :json
-
-    puts params.inspect
+    filepath = upload(params[:content]['file'][:filename], params[:content]['file'][:tempfile])
+    puts filepath
 
     #filepath = upload(params[:content]['file'][:filename], params[:content]['file'][:tempfile])
     #puts filepath
@@ -61,6 +60,13 @@ class Hawkerboard < Sinatra::Base
     #puts params[:content]['file'][:tempfile]
     #{ image: filepath }.to_json
   end
+
+    get '/upload_fix' do
+      puts "hi"
+      data = JSON.parse(request.body.read.to_s)
+      puts params['item_image']
+    end
+
 
 
   # start the server if ruby file executed directly

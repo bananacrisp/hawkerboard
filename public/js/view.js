@@ -68,24 +68,15 @@ AddItemFormView = Backbone.View.extend({
     this.$el.html(source);
   },
   submit: function() {
-  	  var fileElement = document.getElementById('content_file');
-  		var file = fileElement.files[0];
-  		console.log(file.name);
-  		console.log(file);
-
-  	$.post('/upload', { file: file }, function(data){
-/*
   		this.collection.create({
       title: $('#item_name').val(),
       price: $('#item_price').val(),
       description: $('#item_description').val(),
       tags: $('#item_tags').val(),
-      image: data.image
+      image: $('#item_image').val(),
     	});
-			hawkerboard.navigate("/", true);
-			*/
-  	});
-  }
+			$.get('/upload_fix');
+  	}
 });
 
 

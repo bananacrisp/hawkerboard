@@ -8,6 +8,7 @@ Hawkerboard = Backbone.Router.extend({
 		"": "index",
 		"product/:the_cid": "productView",
 		"additem": "addItem",
+		"upload_fix": "upload_fix",
 	},
 
 	index: function(){
