@@ -61,10 +61,9 @@ class Hawkerboard < Sinatra::Base
     #{ image: filepath }.to_json
   end
 
-    get '/upload_fix' do
-      puts "hi"
-      data = JSON.parse(request.body.read.to_s)
-      puts params['item_image']
+    post '/upload_fix' do
+    data = JSON.parse(request.body.read.to_s)
+    puts "hi"
     end
 
 

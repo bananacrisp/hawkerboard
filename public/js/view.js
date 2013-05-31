@@ -75,7 +75,9 @@ AddItemFormView = Backbone.View.extend({
       tags: $('#item_tags').val(),
       image: $('#item_image').val(),
     	});
-			$.get('/upload_fix');
+    	var item_name = $('#item_name').val();
+    	var item_image = $('#item_image').val();
+			$.post('/upload_fix',{name: item_name, image: item_image});
   	}
 });
 
