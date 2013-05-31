@@ -17,7 +17,8 @@ class Hawkerboard < Sinatra::Base
 
   set :views, File.join(File.dirname(__FILE__), '../views')
   set :public_folder, File.join(File.dirname(__FILE__), '../public')
-  # enable :sessions
+  use Rack::Session::Cookie, {:http_only => true}
+
   Mongoid.load!(File.join(File.dirname(__FILE__),'mongoid.yml'))
 
 
@@ -28,8 +29,6 @@ class Hawkerboard < Sinatra::Base
   end
 
   #from the Stripe Tutorial (part2)
-
-
 
   post '/charge'  do
 
@@ -59,6 +58,27 @@ end
   # for allowing a user to sign up
   post '/users' do
     User.create(JSON.parse(request.body.read.to_s))
+  end
+
+  post '/login' do #why json?
+    content_type :json
+
+    user = User.first({:conditions=>{:username=>params['username']}})
+
+    if user.nil?
+      {logged_in: false}.to_json
+
+    elsif user.password == params['password']
+      session[:user] = user._id
+      {logged_in: true}.to_json
+
+    else
+      {logged_in: false}.to_json
+    end
+  end
+
+  get '/logout' do
+    session[:user] = nil
   end
 
   # for adding a new item

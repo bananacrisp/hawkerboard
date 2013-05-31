@@ -91,6 +91,8 @@ IndexView = Backbone.View.extend({
     $('#searchbox').on('keyup', $.proxy(this.search, this));
 		$('#add-item-button').on('click', this.displayAddItem);
     $('#sign-up-button').on('click', this.signup);
+    $('#login-button').on('click', this.login);
+    $('#logout-button').on('click', this.logout);
 	},
 
 	displayAddItem: function(){
@@ -105,13 +107,23 @@ IndexView = Backbone.View.extend({
   search: function() {
     $('#container').html('');
     var searchQuery = $('#searchbox').val();
-    var result = this.collection._.filter({title: searchQuery});
-    //var result = this.collection.where({title: searchQuery});
+    var result = this.collection.where({title: searchQuery});
     _.each(result, this.renderItem);
   },
 
   signup: function() {
     hawkerboard.navigate("/sign-up", true);
+  },
+
+  login: function() {
+    hawkerboard.navigate("/login", true);
+  },
+
+  logout: function() {
+    $.get('/logout', {}, function() {
+      document.cookie = 'rack.session=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+      hawkerboard.navigate("/", true);
+    });
   }
 });
 
@@ -145,6 +157,28 @@ SignupView = Backbone.View.extend({
     var user = new User({username: username, password: password});
     user.save();
     hawkerboard.navigate("/", true);
+  }
+});
+
+LoginView = Backbone.View.extend({
+  events: {
+    "click #login": "login"
+  },
+  render: function() {
+    var source = $("#login-form-template").html();
+    var template = Handlebars.compile(source);
+    this.$el.html(template);
+  },
+  login: function() {
+    var username = $('#username').val();
+    var password = $('#password').val();
+    $.post('/login', {username: username, password: password}, function(data) {
+      if(data['logged_in'] == true) {
+      hawkerboard.navigate("/", {trigger: true}); //Ask Enrique why trigger is different to just putting true
+      } else {
+        alert('incorrect username or password');
+      }
+    })
   }
 });
 

@@ -7,5 +7,5 @@ Items = Backbone.Collection.extend({
 });
 
 User = Backbone.Model.extend({
-  url: '/users'
+  url: '/users',
 });

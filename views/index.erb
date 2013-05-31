@@ -29,7 +29,9 @@
       </article>
       <article class="your-account">
         <span id="sign-up-button" class="btn btn-info">Sign Up</span>
+        <span id="login-button" class="btn btn-info">Login</span>
         <span id="add-item-button" class="btn">Sell your item</span>
+        <span id="logout-button" class="btn">Logout</span>
       </article>
     </nav>
 
@@ -115,6 +117,16 @@
       </article>
     </script>
 
+    <script id="login-form-template" type="text/x-handlebars-template">
+      <article class="form-holder">
+       <header>
+       <h1>Login</h1>
+       </header>
+        <input name='username' id='username' type='text' placeholder='username' />
+        <input name="password" id='password' type='password' placeholder='password' />
+        <button id="login" class="btn">Login</button>
+      </article>
+    </script>
 
 
     <script type="text/javascript" src="/js/model.js"></script>
