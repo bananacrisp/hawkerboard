@@ -68,12 +68,15 @@ AddItemFormView = Backbone.View.extend({
     this.$el.html(source);
   },
   submit: function() {
-  	  var fileElement = document.getElementById('content_file');
-  		var file = fileElement.files[0];
-  		console.log(file.name);
-  		console.log(file);
+  	var formData = new FormData();
+  	var file = document.getElementById('content_file').files[0];
+  	formData.append(file.name, file);
+  	var request = new XMLHttpRequest();
+  	request.open("POST", '/upload', true);
+  	request.send(formData);
 
-  	$.post('/upload', { file: file }, function(data){
+
+  	//$.post('/upload', { file: file }, function(data){
 /*
   		this.collection.create({
       title: $('#item_name').val(),
@@ -84,7 +87,7 @@ AddItemFormView = Backbone.View.extend({
     	});
 			hawkerboard.navigate("/", true);
 			*/
-  	});
+  	//});
   }
 });
 

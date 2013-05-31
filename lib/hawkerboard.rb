@@ -1,6 +1,9 @@
 require 'sinatra/base'
 require 'mongoid'
 require 'aws/s3'
+require 'stringio'
+require 'tempfile'
+
 require_relative 'item'
 
 class Hawkerboard < Sinatra::Base
@@ -14,11 +17,15 @@ class Hawkerboard < Sinatra::Base
   Mongoid.load!(File.join(File.dirname(__FILE__),'mongoid.yml'))
 
   helpers do
-   def upload(filename, file)
-    puts filename
-    puts file
+   def upload(uploaded_file)
+
+
       bucket = 'hawkerboard'
-      filename = srand.to_s + filename
+      filename = srand.to_s
+
+      file = Tempfile.new('filename')
+      file.write uploaded_file.to_s
+
       AWS::S3::Base.establish_connection!(
         :access_key_id => "AKIAIIZW73LTKTCU5OCQ",
         :secret_access_key => "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"
@@ -51,15 +58,15 @@ class Hawkerboard < Sinatra::Base
   end
 
   post '/upload' do
-    content_type :json
+    file = StringIO.new(request.body.read)
+    puts file.inspect
 
-    puts params.inspect
 
-    #filepath = upload(params[:content]['file'][:filename], params[:content]['file'][:tempfile])
+    filepath = upload(file)
     #puts filepath
     #puts params[:content]['file'][:filename]
     #puts params[:content]['file'][:tempfile]
-    #{ image: filepath }.to_json
+    { image: filepath }.to_json
   end
 
 
