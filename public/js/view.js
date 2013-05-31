@@ -58,7 +58,8 @@ ItemCardView = Backbone.View.extend({
 
 AddItemFormView = Backbone.View.extend({
   events: {
-    'click #add-item': 'submit'
+    'click #add-item': 'submit',
+    'click #btn-upload': 'upload'
   },
 
   render: function() {
@@ -67,15 +68,24 @@ AddItemFormView = Backbone.View.extend({
     this.$el.html(source);
   },
   submit: function() {
-    this.collection.create({
+  	  var fileElement = document.getElementById('content_file');
+  		var file = fileElement.files[0];
+  		console.log(file.name);
+  		console.log(file);
+
+  	$.post('/upload', { file: file }, function(data){
+/*
+  		this.collection.create({
       title: $('#item_name').val(),
       price: $('#item_price').val(),
       description: $('#item_description').val(),
       tags: $('#item_tags').val(),
-      image: $('#item_image').val(),
-    });
-    hawkerboard.navigate("/", true);
-   },
+      image: data.image
+    	});
+			hawkerboard.navigate("/", true);
+			*/
+  	});
+  }
 });
 
 
