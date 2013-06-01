@@ -59,7 +59,6 @@ ItemCardView = Backbone.View.extend({
 AddItemFormView = Backbone.View.extend({
   events: {
     'click #add-item': 'submit',
-    'click #btn-upload': 'upload'
   },
 
   render: function() {
@@ -73,12 +72,11 @@ AddItemFormView = Backbone.View.extend({
       price: $('#item_price').val(),
       description: $('#item_description').val(),
       tags: $('#item_tags').val(),
-      image: $('#item_image').val(),
     	});
-    	var item_name = $('#item_name').val();
-    	var item_image = $('#item_image').val();
-			$.post('/upload_fix',{name: item_name, image: item_image});
+  		$('form').submit();
   	}
+
+
 });
 
 

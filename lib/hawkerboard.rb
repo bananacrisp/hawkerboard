@@ -15,8 +15,6 @@ class Hawkerboard < Sinatra::Base
 
   helpers do
    def upload(filename, file)
-    puts filename
-    puts file
       bucket = 'hawkerboard'
       filename = srand.to_s + filename
       AWS::S3::Base.establish_connection!(
@@ -52,21 +50,13 @@ class Hawkerboard < Sinatra::Base
 
   post '/upload' do
     filepath = upload(params[:content]['file'][:filename], params[:content]['file'][:tempfile])
+    item = Item.last
+    item.update_attribute(:image, filepath)
     puts filepath
-
-    #filepath = upload(params[:content]['file'][:filename], params[:content]['file'][:tempfile])
-    #puts filepath
-    #puts params[:content]['file'][:filename]
-    #puts params[:content]['file'][:tempfile]
-    #{ image: filepath }.to_json
+    #item = Item.where(item_image: params['item_image'],item_name: params['item_name'])
+    #item.update_attribute(:item_image, filepath)
+    redirect '/'
   end
-
-    post '/upload_fix' do
-    data = JSON.parse(request.body.read.to_s)
-    puts "hi"
-    end
-
-
 
   # start the server if ruby file executed directly
   run! if app_file == $0
