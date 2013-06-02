@@ -67,36 +67,15 @@ AddItemFormView = Backbone.View.extend({
     this.$el.html(source);
   },
   submit: function() {
-<<<<<<< HEAD
-=======
-  	var formData = new FormData();
-  	var file = document.getElementById('content_file').files[0];
-  	formData.append(file.name, file);
-  	var request = new XMLHttpRequest();
-  	request.open("POST", '/upload', true);
-  	request.send(formData);
-
-
-  	//$.post('/upload', { file: file }, function(data){
-/*
->>>>>>> master
   		this.collection.create({
       title: $('#item_name').val(),
       price: $('#item_price').val(),
       description: $('#item_description').val(),
       tags: $('#item_tags').val(),
+      everything: $('#item_name').val()+$('#item_description').val()+$('#item_tags').val()+$('#item_price').val(),
     	});
-<<<<<<< HEAD
   		$('form').submit();
   	}
-
-
-=======
-			hawkerboard.navigate("/", true);
-			*/
-  	//});
-  }
->>>>>>> master
 });
 
 
@@ -111,6 +90,9 @@ IndexView = Backbone.View.extend({
 		this.collection.forEach(this.renderItem);
     $('#searchbox').on('keyup', $.proxy(this.search, this));
 		$('#add-item-button').on('click', this.displayAddItem);
+    $('#sign-up-button').on('click', this.signup);
+    $('#login-button').on('click', this.login);
+    $('#logout-button').on('click', this.logout);
 	},
 
 	displayAddItem: function(){
@@ -125,9 +107,32 @@ IndexView = Backbone.View.extend({
   search: function() {
     $('#container').html('');
     var searchQuery = $('#searchbox').val();
-    var result = this.collection._.filter({title: searchQuery});
-    //var result = this.collection.where({title: searchQuery});
+    //var result = this.collection.where({everything: searchQuery});
+
+    var result = this.collection.filter(function(item) {
+      if(item.get('everything') != null) {
+        return item.get('everything').indexOf(searchQuery) !== -1
+      }
+    })
+
     _.each(result, this.renderItem);
+  },
+
+  //fo
+
+  signup: function() {
+    hawkerboard.navigate("/sign-up", true);
+  },
+
+  login: function() {
+    hawkerboard.navigate("/login", true);
+  },
+
+  logout: function() {
+    $.get('/logout', {}, function() {
+      document.cookie = 'rack.session=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+      hawkerboard.navigate("/", true);
+    });
   }
 });
 
@@ -139,10 +144,52 @@ ProductView = Backbone.View.extend({
 	}
 });
 
+//function itemsArray(items)
+
 AddItemView = Backbone.View.extend({
 	render: function() {
 		var addItemForm = new AddItemFormView({el: "#container", collection: this.collection})
 		addItemForm.render();
 	}
+});
+
+SignupView = Backbone.View.extend({
+  events: {
+    "click #sign-up": "signup"
+  },
+  render: function() {
+    var source = $("#sign-up-form-template").html();
+    var template = Handlebars.compile(source);
+    this.$el.html(template);
+  },
+  signup: function() {
+    var username = $('#username').val();
+    var password = $('#password').val();
+    var user = new User({username: username, password: password});
+    user.save();
+    hawkerboard.navigate("/", true);
+  }
+});
+
+LoginView = Backbone.View.extend({
+  events: {
+    "click #login": "login"
+  },
+  render: function() {
+    var source = $("#login-form-template").html();
+    var template = Handlebars.compile(source);
+    this.$el.html(template);
+  },
+  login: function() {
+    var username = $('#username').val();
+    var password = $('#password').val();
+    $.post('/login', {username: username, password: password}, function(data) {
+      if(data['logged_in'] == true) {
+      hawkerboard.navigate("/", {trigger: true}); //Ask Enrique why trigger is different to just putting true
+      } else {
+        alert('incorrect username or password');
+      }
+    })
+  }
 });
 

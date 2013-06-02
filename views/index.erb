@@ -1,21 +1,17 @@
 <html>
   <head>
-
     <!-- Including our Stylesheets -->
 
-    <!-- link rel="stylesheet" type="text/css" href='/css/bootstrap-responsive.css'-->
     <link rel="stylesheet" type="text/css" href='/css/bootstrap.css'>
     <link rel="stylesheet" type="text/css" href='/css/flat-ui.css'>
     <link rel="stylesheet" type="text/css" href='/css/main.css'>
 
     <!-- Including JQuery Underscore and Backbone -->
     <script type="text/javascript" src="/js/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
     <script type="text/javascript" src="/js/underscore.js"></script>
     <script type="text/javascript" src="/js/backbone.js"></script>
     <script type="text/javascript" src="/js/handlebars.js"></script>
-    <!--script type="text/javascript" src="/js/jquery.masonry.min.js"></script-->
-    <!--script type="text/javascript" src="/js/jquery.vintage.js"></script-->
-
 
   </head>
   <body>
@@ -25,11 +21,13 @@
       </article>
       <article class="search">
         <span class="search-logo">
-        <input type="text" id="searchbox" placeholder="search HawkerBoard.com" name="searchbox">
+        <input type="text" id="searchbox" placeholder="search HawkerBoard.com" name="searchbox" data-provide="typeahead" autocomplete="off">
       </article>
       <article class="your-account">
         <span id="sign-up-button" class="btn btn-info">Sign Up</span>
-        <span id="add-item-button" class="btn">Sell your item</span>
+        <span id="login-button" class="btn btn-info">Login</span>
+        <span id="logout-button" class="btn ">Logout</span>
+        <span id="add-item-button" class="btn btn-success">Sell your item</span>
       </article>
     </nav>
 
@@ -44,13 +42,7 @@
         </header>
         <section>
           <h1>{{title}}</h1>
-          <p>{{description}}</p>
           <p class="price">£{{price}}</p>
-          <ul>
-            {{#each tags}}
-            <li>{{this}}</li>
-            {{/each}}
-          </ul>
         </section>
       </article>
     </script>
@@ -62,16 +54,34 @@
         </header>
         <section>
           <h1>{{title}}</h1>
-          <p>{{description}}</p>
           <p class="price">£{{price}}</p>
-          <dt>
-            {{#each tags}}
-            <p>{{this}}</p>
-            {{/each}}
-          </dt>
+          <p class="description">Description: {{description}}</p>
+          <aside class="all-tags">
+            <ul>
+              {{#each tags}}
+              <li>{{this}}</li>
+              {{/each}}
+            </ul>
+          </aside>
+
+          <form action="/charge" method="post" class="payment">
+
+            <article>
+              <label class="amount">
+                <input type="hidden" name="charge" value="{{price}}">
+              </label>
+            </article>
+
+            <article class="buy-button">
+              <script src="https://checkout.stripe.com/v2/checkout.js" class="stripe-button"
+                  data-key="<%= settings.publishable_key %>"
+                  data-name="{{title}} for £{{price}}"
+                  data-amount="{{price}}">
+              </script>
+            </article>
+          </form>
+
         </section>
-        <footer>
-        </footer>
       </article>
     </script>
 
@@ -104,6 +114,30 @@
       </article>
     </script>
 
+
+    <script id="sign-up-form-template" type="text/x-handlebars-template">
+      <article class="form-holder">
+       <header>
+       <h1>Create an account</h1>
+       </header>
+        <input name='username' id='username' type='text' placeholder='choose a username' />
+        <input name="password" id='password' type='password' placeholder='choose a password' />
+        <button id="sign-up" class="btn">Sign up</button>
+      </article>
+    </script>
+
+    <script id="login-form-template" type="text/x-handlebars-template">
+      <article class="form-holder">
+       <header>
+       <h1>Login</h1>
+       </header>
+        <input name='username' id='username' type='text' placeholder='username' />
+        <input name="password" id='password' type='password' placeholder='password' />
+        <button id="login" class="btn">Login</button>
+      </article>
+    </script>
+
+
     <script type="text/javascript" src="/js/model.js"></script>
     <script type="text/javascript" src="/js/view.js"></script>
     <script type="text/javascript" src="/js/router.js"></script>
@@ -114,16 +148,6 @@
         Backbone.history.start();
       });
     </script>
-
-    <!--script type="text/javascript">
-    $(document).ready(function(){
-        $('img').load(function(){
-            $("#container").masonry();
-        });
-        $("#container").masonry();
-    });
-    //note this is from stackoverflow solution not Masonary.js website recommendations //
-    </script-->
 
  </body>
 </html>

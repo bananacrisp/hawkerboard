@@ -2,13 +2,16 @@ Hawkerboard = Backbone.Router.extend({
 
 	initialize: function() {
 		this.items = new Items;
+		this.loginView = new LoginView({el: '#container'});
 	 },
 
 	routes: {
 		"": "index",
 		"product/:the_cid": "productView",
 		"additem": "addItem",
-		"upload_fix": "upload_fix",
+		"sign-up": "signup",
+		"login": "login",
+		//"logout": "logout",
 	},
 
 	index: function(){
@@ -17,7 +20,6 @@ Hawkerboard = Backbone.Router.extend({
 	},
 
 	productView: function(the_cid){
-		console.log(the_cid);
 		var productView = new ProductView({el: '#container'});
 		productView.renderItem(this.items.get(the_cid));
 	},
@@ -25,6 +27,19 @@ Hawkerboard = Backbone.Router.extend({
 	addItem: function(){
 		var addItemView = new AddItemView({el: '#container', collection: this.items});
 		addItemView.render();
+	},
+
+	signup: function(){
+		var signupView = new SignupView({el: '#container'});
+		signupView.render();
+	},
+
+	login: function() {
+		this.loginView.render();
+	},
+
+	thankyou: function(){
+	var thankyouView = ThankYouView({el: '#container',});
 	}
 
 })

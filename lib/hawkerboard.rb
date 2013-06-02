@@ -1,29 +1,31 @@
 require 'sinatra/base'
 require 'mongoid'
 require 'aws/s3'
-require 'stringio'
-require 'tempfile'
+require 'stripe'
 
 require_relative 'item'
+require_relative 'user'
 
 class Hawkerboard < Sinatra::Base
 
   #this class is a controller
   #this is the app too! - because it is inheriting from Sinatra::Base
 
+  #from the Strip Tutorial (part1)
+  set :publishable_key, 'pk_test_VXWpWC81B0aNirU54T9XzUEH'
+  set :secret_key, "sk_test_FfmJ08mn4ciYHkwNKYOz0J2z"
+  Stripe.api_key = settings.secret_key
+
+
   set :views, File.join(File.dirname(__FILE__), '../views')
   set :public_folder, File.join(File.dirname(__FILE__), '../public')
-  # enable :sessions
+  use Rack::Session::Cookie, {:http_only => true}
+
   Mongoid.load!(File.join(File.dirname(__FILE__),'mongoid.yml'))
 
   helpers do
-<<<<<<< HEAD
    def upload(filename, file)
-=======
-   def upload(uploaded_file)
 
-
->>>>>>> master
       bucket = 'hawkerboard'
       filename = srand.to_s
 
@@ -43,14 +45,57 @@ class Hawkerboard < Sinatra::Base
     erb :index
   end
 
+  #from the Stripe Tutorial (part2)
+  post '/charge'  do
+
+  customer = Stripe::Customer.create(
+    :email => 'customer@example.com',
+    :card  => params[:stripeToken]
+  )
+
+  charge = Stripe::Charge.create(
+    :amount      => params['charge'],
+    :description => 'Sinatra Charge',
+    :currency    => 'gbp',
+    :customer    => customer
+  )
+  erb :index
+end
+
+error Stripe::CardError do
+    env['sinatra.error'].message
+end
+
+
   get '/items' do
     content_type :json
     Item.all.to_json
   end
 
   # for allowing a user to sign up
-  post 'sign_up' do
-    user = User.create!(:username =>params['username'], :password => params['password'])
+  post '/users' do
+    User.create(JSON.parse(request.body.read.to_s))
+  end
+
+  post '/login' do #why json?
+    content_type :json
+
+    user = User.first({:conditions=>{:username=>params['username']}})
+
+    if user.nil?
+      {logged_in: false}.to_json
+
+    elsif user.password == params['password']
+      session[:user] = user._id
+      {logged_in: true}.to_json
+
+    else
+      {logged_in: false}.to_json
+    end
+  end
+
+  get '/logout' do
+    session[:user] = nil
   end
 
   # for adding a new item
@@ -62,25 +107,12 @@ class Hawkerboard < Sinatra::Base
   end
 
   post '/upload' do
-<<<<<<< HEAD
     filepath = upload(params[:content]['file'][:filename], params[:content]['file'][:tempfile])
     item = Item.last
     item.update_attribute(:image, filepath)
     puts filepath
-    #item = Item.where(item_image: params['item_image'],item_name: params['item_name'])
-    #item.update_attribute(:item_image, filepath)
     redirect '/'
-=======
-    file = StringIO.new(request.body.read)
-    puts file.inspect
 
-
-    filepath = upload(file)
-    #puts filepath
-    #puts params[:content]['file'][:filename]
-    #puts params[:content]['file'][:tempfile]
-    { image: filepath }.to_json
->>>>>>> master
   end
 
   # start the server if ruby file executed directly
@@ -88,3 +120,4 @@ class Hawkerboard < Sinatra::Base
   # really not sure what this is for (Matt)
 
 end
+

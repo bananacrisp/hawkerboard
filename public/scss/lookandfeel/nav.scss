@@ -1,6 +1,7 @@
 nav {
   background-color: $silver;
   color: $clouds;
+  width: 100%;
   h1 {
     text-align: center;
     text-transform: uppercase;
@@ -19,8 +20,8 @@ nav {
   input {
     background: url(../images/search-2x.png) no-repeat center right;
     padding: 30px 15px;
-    font-size: 30px;
-    line-height: 30px;
+    font-size: 20px;
+    line-height: 20px;
     margin: 0;
     color: $clouds;
     width: 70%;
@@ -32,3 +33,9 @@ nav {
       width: 80%;
       margin: 0 5%;
     }
+
+.your-account {
+  .btn {
+    margin-bottom: 5px;
+  }
+}
