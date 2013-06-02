@@ -29,9 +29,6 @@ class Hawkerboard < Sinatra::Base
       bucket = 'hawkerboard'
       filename = srand.to_s
 
-      file = Tempfile.new('filename')
-      file.write uploaded_file.to_s
-
       AWS::S3::Base.establish_connection!(
         :access_key_id => "AKIAIIZW73LTKTCU5OCQ",
         :secret_access_key => "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"
