@@ -1,4 +1,8 @@
 hawkerboard
 ===========
 
-Where dreams come true for buyers and sellers (sell your old shit to lunatics)
+Where dreams come true for buyers and sellers
+
+- pretty as Pinterest
+- useful as Gumtree
+- secure with Stripe
