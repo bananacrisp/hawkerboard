@@ -58,7 +58,7 @@ ItemCardView = Backbone.View.extend({
 
 AddItemFormView = Backbone.View.extend({
   events: {
-    'click #add-item': 'submit'
+    'click #add-item': 'submit',
   },
 
   render: function() {
@@ -67,16 +67,15 @@ AddItemFormView = Backbone.View.extend({
     this.$el.html(source);
   },
   submit: function() {
-    this.collection.create({
+  		this.collection.create({
       title: $('#item_name').val(),
       price: $('#item_price').val(),
       description: $('#item_description').val(),
       tags: $('#item_tags').val(),
-      image: $('#item_image').val(),
       everything: $('#item_name').val()+$('#item_description').val()+$('#item_tags').val()+$('#item_price').val(),
-    });
-    hawkerboard.navigate("/", true);
-   },
+    	});
+  		$('form').submit();
+  	}
 });
 
 

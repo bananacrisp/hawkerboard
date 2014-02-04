@@ -1,6 +1,8 @@
 require 'sinatra/base'
 require 'mongoid'
+require 'aws/s3'
 require 'stripe'
+
 require_relative 'item'
 require_relative 'user'
 
@@ -21,8 +23,20 @@ class Hawkerboard < Sinatra::Base
 
   Mongoid.load!(File.join(File.dirname(__FILE__),'mongoid.yml'))
 
+  helpers do
+   def upload(filename, file)
 
-  #RUBY STUFF BELOW HERE
+      bucket = 'hawkerboard'
+      filename = srand.to_s
+
+      AWS::S3::Base.establish_connection!(
+        :access_key_id => "AKIAIIZW73LTKTCU5OCQ",
+        :secret_access_key => "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"
+        )
+      AWS::S3::S3Object.store( filename, open(file.path), bucket)
+      return  "https://s3.amazonaws.com/hawkerboard/" + filename
+    end
+  end
 
   get '/' do
     erb :index
@@ -89,6 +103,14 @@ end
     #so how do we redirect to a confirmation page but within the backbone app...!? (Matt)
   end
 
+  post '/upload' do
+    filepath = upload(params[:content]['file'][:filename], params[:content]['file'][:tempfile])
+    item = Item.last
+    item.update_attribute(:image, filepath)
+    puts filepath
+    redirect '/'
+
+  end
 
   # start the server if ruby file executed directly
   run! if app_file == $0

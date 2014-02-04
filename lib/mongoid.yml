@@ -1,6 +1,7 @@
 development:
    database: hawkerboard
    host: localhost
+
 test:
   database: hawkerboard_test
   host: localhost
